@@ -1,0 +1,29 @@
+.jumbotron{
+    position: relative;
+    height: 500px;
+    text-align: center;
+    opacity: 0.6;
+    box-shadow: 10px 10px 5px grey;;
+    background-image: url("/images/photo-1513596846216-48ae70153834.jpeg");
+    background-size: cover;
+}
+#main-header{
+    position: relative;
+    text-align: center;
+    margin-top: -366px;
+    font-family: 'Playfair Display', serif;
+
+}
+h1.display-4{
+font-size: 70px;
+}
+p.lead{
+    font-size: 30px;
+}
+.bg-dark{
+    background-color: red!important;
+}
+.btn-dark{
+    background:transparent;
+    border-style: none;
+}

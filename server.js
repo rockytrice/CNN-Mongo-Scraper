@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
-var mongojs = require("mongojs");
 
 
 // Initialize Express=================
@@ -12,6 +11,8 @@ var app = express();
 // scraping tools====================
 var axios = require("axios");
 var cheerio = require("cheerio");
+
+var PORT = 3000;
 
 // Require all models
 var db = require("./models");
@@ -53,7 +54,7 @@ app.get("/", function (req, res) {
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function (req, res) {
     // make request to cnn website
-    request("https://www.cnn.com/world", function (error, response, html) {
+    axios.get("https://www.cnn.com/world", function (error, response, html) {
         //     // load html body from request into cheerio
         var $ = cheerio.load(html);
         $("h3.cd__headline").each(function (i, element, ) {
@@ -121,7 +122,8 @@ app.get("/articles", function(req, res) {
 
 
 
-// Listen on port 3000
-app.listen(3000, function () {
-    console.log("App running on port 3000!");
-});
+// Start the server
+app.listen(PORT, function() {
+    console.log("App running on port " + PORT + "!");
+  });
+  

@@ -1,5 +1,5 @@
 // Dependencies
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 var express = require("express");
 var bodyParser = require("body-parser");
 // Initialize Express
@@ -38,20 +38,25 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 // Routes=======================================================================================================
-app.get("/", function(req, res){
-res.render("index",{layout: "main"});
+app.get("/", function (req, res) {
+    res.render("index", {
+        layout: "main"
+    });
 });
+// app.delete("")
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function (req, res) {
     // make request to cnn website
-    request("http://www.cnn.com", function (error, response, html) {
-        // load html body from request into cheerio
+    request("https://www.cnn.com/world", function (error, response, html) {
+        //     // load html body from request into cheerio
         var $ = cheerio.load(html);
-        ("h2").each(function (i, element) {
-            var title = $(element).children("a").text();
+        $("h3.cd__headline").each(function (i, element) {
+            var title = $(element).children().text();
+            // console.log(title);
+
             var link = $(element).children("a").attr("href");
             var summary = $(element).children("a").text();
-            if (title && link && summary) {
+            if (title && link) {
                 // Insert the data in the scrapedData db
                 db.scrapedData.insert({
                         title: title,
@@ -68,15 +73,21 @@ app.get("/scrape", function (req, res) {
                         }
                     });
             }
+
         })
     })
 
-// Send a "Scrape Complete" message to the browser
-res.send("Scrape Complete");
+    // Send a "Scrape Complete" message to the browser
+    res.send("Scrape Complete");
 });
+
 
 
 // Listen on port 3000
 app.listen(3000, function () {
     console.log("App running on port 3000!");
 });
+
+
+
+

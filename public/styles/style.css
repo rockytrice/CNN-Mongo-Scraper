@@ -12,6 +12,7 @@
     text-align: center;
     margin-top: -366px;
     font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 4px white;
 
 }
 h1.display-4{
@@ -26,4 +27,10 @@ p.lead{
 .btn-dark{
     background:transparent;
     border-style: none;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: black;
+}
+body{
+    background-image: url("https://img.freepik.com/free-photo/white-concrete-wall-for-background_1249-263.jpg?size=338&ext=jpg");
 }

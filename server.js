@@ -1,12 +1,22 @@
 // Dependencies
-// var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var express = require("express");
+var logger = require("morgan");
 var bodyParser = require("body-parser");
-// Initialize Express
-var app = express();
 var mongojs = require("mongojs");
-var request = require("request");
+
+
+// Initialize Express=================
+var app = express();
+
+// scraping tools====================
+var axios = require("axios");
 var cheerio = require("cheerio");
+
+// Require all models
+var db = require("./models");
+
+
 // Set up a static folder (public) for our web app
 app.use(express.static("public"));
 
@@ -79,7 +89,7 @@ app.get("/scrape", function (req, res) {
 });
 // find all article route================================================================================================
 // Retrieve results from mongo
-app.get("/all", function(req, res) {
+app.get("/articles", function(req, res) {
     // Find all notes in the notes collection
     db.scrapedData.find({}, function(error, found) {
       // Log any errors

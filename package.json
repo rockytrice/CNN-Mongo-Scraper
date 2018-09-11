@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/rockytrice/CNN-Mongo-Scraper#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
@@ -25,6 +26,7 @@
     "i": "^0.3.6",
     "mongojs": "^2.6.0",
     "mongoose": "^5.2.13",
+    "morgan": "^1.9.1",
     "request": "^2.88.0"
   }
 }

@@ -50,8 +50,7 @@ app.get("/", function (req, res) {
         layout: "main"
     });
 });
-// app.delete("")
-// Scrape data from one site and place it into the mongodb db
+// Scrape data from one site and place it into the mongodb db======================================================
 app.get("/scrape", function (req, res) {
     // make request to cnn website
     axios.get("https://www.cnn.com/world").then(function(response) {
@@ -79,34 +78,12 @@ app.get("/scrape", function (req, res) {
                // If an error occurred, send it to the client
                return res.json(err);
              });
-            
-            // var title = $(element).children().text();
-            // var link = $(element).children("a").attr("href");
-            // var summary = $(element).children("a").text();
-            // if (title && link && summary) {
-            //     // Insert the data in the scrapedData db
-            //     db.scrapedData.insert({
-            //             title: title,
-            //             link: link,
-            //             summary: summary,
-            //         },
-            //         function (err, inserted) {
-            //             if (err) {
-            //                 // Log the error if one is encountered during the query
-            //                 console.log(err);
-            //             } else {
-            //                 // Otherwise, log the inserted data
-            //                 console.log(inserted);
-            //             }
-            //         });
-            // }
-
         })
     })
     // Send a "Scrape Complete" message to the browser
     res.send("Scrape Complete");
 });
-// Route for getting all Articles from the db
+// Route for getting all Articles from the db================================================================================
 app.get("/articles", function(req, res) {
     // Grab every document in the Articles collection
     db.Article.find({})
@@ -120,7 +97,21 @@ app.get("/articles", function(req, res) {
       });
   });
 
-
+// Route for grabbing a specific Article by id, populate it with it's note
+app.get("/articles/:id", function(req, res) {
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.Article.findOne({ _id: req.params.id })
+      // ..and populate all of the notes associated with it
+      .populate("note")
+      .then(function(dbArticle) {
+        // If we were able to successfully find an Article with the given id, send it back to the client
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
 
 
 

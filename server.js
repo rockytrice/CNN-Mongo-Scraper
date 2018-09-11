@@ -50,18 +50,16 @@ app.get("/scrape", function (req, res) {
     request("https://www.cnn.com/world", function (error, response, html) {
         //     // load html body from request into cheerio
         var $ = cheerio.load(html);
-        $("h3.cd__headline").each(function (i, element) {
+        $("h3.cd__headline").each(function (i, element, ) {
             var title = $(element).children().text();
-            // console.log(title);
-
             var link = $(element).children("a").attr("href");
             var summary = $(element).children("a").text();
-            if (title && link) {
+            if (title && link && summary) {
                 // Insert the data in the scrapedData db
                 db.scrapedData.insert({
                         title: title,
                         link: link,
-                        summary: summary
+                        summary: summary,
                     },
                     function (err, inserted) {
                         if (err) {
@@ -76,10 +74,33 @@ app.get("/scrape", function (req, res) {
 
         })
     })
-
     // Send a "Scrape Complete" message to the browser
     res.send("Scrape Complete");
 });
+// find all article route================================================================================================
+// Retrieve results from mongo
+app.get("/all", function(req, res) {
+    // Find all notes in the notes collection
+    db.scrapedData.find({}, function(error, found) {
+      // Log any errors
+      if (error) {
+        console.log(error);
+      }
+      else {
+        // Otherwise, send json of the notes back to user
+        // This will fire off the success function of the ajax request
+        res.json(found);
+      }
+    });
+  });
+
+
+
+
+
+
+
+
 
 
 
@@ -87,7 +108,3 @@ app.get("/scrape", function (req, res) {
 app.listen(3000, function () {
     console.log("App running on port 3000!");
 });
-
-
-
-

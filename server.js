@@ -54,14 +54,14 @@ app.get("/", function (req, res) {
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function (req, res) {
     // make request to cnn website
-    axios.get("https://www.cnn.com/world", function (error, response, html) {
+    axios.get("https://www.cnn.com/world").then(function(response) {
         //     // load html body from request into cheerio
-        var $ = cheerio.load(html);
+        var $ = cheerio.load(response.data);
         $("h3.cd__headline").each(function (i, element, ) {
             var result = {};
             // Add the text,summary and href of every link, and save them as properties of the result object
             result.title = $(this)
-             .children()
+             .children("a")
              .text();
             result.link = $(this)
              .children("a")
@@ -70,7 +70,15 @@ app.get("/scrape", function (req, res) {
              .children("a")
              .text();
 
-
+             db.Article.create(result)
+             .then(function(dbArticle) {
+               // View the added result in the console
+               console.log(dbArticle);
+             })
+             .catch(function(err) {
+               // If an error occurred, send it to the client
+               return res.json(err);
+             });
             
             // var title = $(element).children().text();
             // var link = $(element).children("a").attr("href");

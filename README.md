@@ -1,1 +1,1 @@
-# CNN-Mongo-Scraper
+# MLB-Mongo-Scraper

@@ -38,14 +38,15 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // Database configuration====================================================================================
+//  If deployed, use the deployed database. Otherwise use the local mongoHeadlines database 
+ var MONGODB_URI = process.env.MONGODB_URI ||"mongodb://localhost/cnnScraper";
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/cnnScraper", {
-    useNewUrlParser: true
-});
-// // This makes sure that any errors are logged if mongodb runs into an issue
-// db.on("error", function (error) {
-//     console.log("Database Error:", error);
-// });
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
+
 // Routes=======================================================================================================
 app.get("/", function (req, res) {
     res.render("index", {
@@ -59,7 +60,7 @@ app.get("/scrape", function (req, res) {
         //     // load html body from request into cheerio
         var $ = cheerio.load(response.data);
         $("h3.cd__headline").each(function (i, element) {
-            if(i < 10) {
+            if(i < 20) {
 
             
             var result = {};
@@ -148,7 +149,23 @@ app.post("/articles/:id", function (req, res) {
         });
 });
 
-
+// Clear the DB
+app.get("/clearall", function(req, res) {
+  // Remove every note from the notes collection
+  db.notes.remove({}, function(error, response) {
+    // Log any errors to the console
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    else {
+      // Otherwise, send the mongojs response to the browser
+      // This will fire off the success function of the ajax request
+      console.log(response);
+      res.send(response);
+    }
+  });
+});
 // Start the server
 app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");

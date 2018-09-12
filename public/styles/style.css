@@ -34,3 +34,6 @@ p.lead{
 body{
     background-image: url("https://img.freepik.com/free-photo/white-concrete-wall-for-background_1249-263.jpg?size=338&ext=jpg");
 }
+.card{
+    margin-top: 240px;
+}

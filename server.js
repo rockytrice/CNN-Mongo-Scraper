@@ -151,7 +151,7 @@ app.post("/articles/:id", function (req, res) {
 // Clear the DB
 app.get("/clearall", function(req, res) {
   // Remove every note from the notes collection
-  db.notes.remove({}, function(error, response) {
+  db.Article.remove({}, function(error, response) {
     // Log any errors to the console
     if (error) {
       console.log(error);

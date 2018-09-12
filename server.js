@@ -171,18 +171,19 @@ app.get("/savedarticles", function(req, res){
     res.render("saved", {
         layout: "main"
     });
-    db.Article.find({ saved: true })
-    .then(function(dbArticle){
+    // db.Article.find({ saved: true })
+    // .then(function(dbArticle){
         
-        res.json(dbArticle);
-    })
-    .catch(function(err){
-        // If an error is encountered, send it to the client
-        res.json(err);
-    });
+    //     res.json(dbArticle);
+    // })
+    // .catch(function(err){
+    //     // If an error is encountered, send it to the client
+    //     res.json(err);
+    // });
 });
 
 // Start the server
 app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");
 });
+

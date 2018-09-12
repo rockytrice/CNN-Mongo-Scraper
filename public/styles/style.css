@@ -37,3 +37,7 @@ body{
 .card{
     margin-top: 240px;
 }
+.btn-primary{
+    width: 112px;
+    margin-left: 19px;
+}

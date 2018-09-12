@@ -60,7 +60,7 @@ app.get("/scrape", function (req, res) {
         //     // load html body from request into cheerio
         var $ = cheerio.load(response.data);
         $("div.p-featured-content__body").each(function (i, element) {
-            if(i < 20) {
+            if(i < 12) {
 
             
             var result = {};
@@ -127,6 +127,7 @@ app.get("/articles/:id", function (req, res) {
 
 // Route for saving/updating an Article's associated Note=====================================================================
 app.post("/articles/:id", function (req, res) {
+    
     // Create a new note and pass the req.body to the entry
     db.Note.create(req.body)
         .then(function (dbNote) {
@@ -165,6 +166,22 @@ app.get("/clearall", function(req, res) {
     }
   });
 });
+
+app.get("/savedarticles", function(req, res){
+    res.render("saved", {
+        layout: "main"
+    });
+    db.Article.find({ saved: true })
+    .then(function(dbArticle){
+        
+        res.json(dbArticle);
+    })
+    .catch(function(err){
+        // If an error is encountered, send it to the client
+        res.json(err);
+    });
+});
+
 // Start the server
 app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");

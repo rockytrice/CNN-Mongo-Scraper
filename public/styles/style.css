@@ -1,16 +1,16 @@
 .jumbotron{
     position: relative;
-    height: 500px;
+    height: 717px;
     text-align: center;
     opacity: 0.6;
     box-shadow: 10px 10px 5px grey;;
-    background-image: url("/images/photo-1513596846216-48ae70153834.jpeg");
+    background-image: url("/images/mlb-opening-day-800.jpg");
     background-size: cover;
 }
 #main-header{
     position: relative;
     text-align: center;
-    margin-top: -366px;
+    margin-top: -474px;
     font-family: 'Playfair Display', serif;
     text-shadow: 2px 2px 4px white;
 
@@ -35,7 +35,7 @@ body{
     background-image: url("https://img.freepik.com/free-photo/white-concrete-wall-for-background_1249-263.jpg?size=338&ext=jpg");
 }
 .card{
-    margin-top: 240px;
+    margin-top: 346px;
 }
 .btn-primary{
     width: 112px;
